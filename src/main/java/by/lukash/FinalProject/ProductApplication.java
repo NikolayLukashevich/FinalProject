@@ -1,41 +1,38 @@
 package by.lukash.FinalProject;
 
-import by.lukash.FinalProject.Annotation.AnnotationService.LazyLoadService;
-import by.lukash.FinalProject.Annotation.AnnotationService.SimpleLoadService;
+//import by.lukash.FinalProject.Annotation.AnnotationService.LazyLoadService;
+//import by.lukash.FinalProject.Annotation.AnnotationService.SimpleLoadService;
+import by.lukash.FinalProject.Service.ProductService;
 import by.lukash.FinalProject.bean.Product;
-import by.lukash.FinalProject.repository.ProductRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.math.BigDecimal;
 
-import static by.lukash.FinalProject.Annotation.AnnotationService.inspectService.inspectService;
+//import static by.lukash.FinalProject.Annotation.AnnotationService.inspectService.inspectService;
 
 @SpringBootApplication
 public class ProductApplication {
 
 	public static void main(String[] args) {
-		Product product = new Product(null, "product", BigDecimal.valueOf(123.5555)  , Product.Category.FRUIT);
-		Product product1 = new Product(null, "product1", BigDecimal.valueOf (123.6666), Product.Category.BERRIES);;
-		Product product2 = new Product(null, "product2", BigDecimal.valueOf (123.7777), Product.Category.VEGETABLE);;
-		ProductRepository productRepository = new ProductRepository();
-		productRepository.add(product);
-		productRepository.add(product1);
-		productRepository.add(product2);
-//		productRepository.printAll();
+//		SpringApplication.run(ProductApplication.class, args);
+		Product product = new Product("Манго", "Вкусный, сочный", Product.Category.FRUIT, BigDecimal.valueOf(6.99));
+		Product product1 = new Product("Арбуз", "Большой, красый", Product.Category.BERRIES, BigDecimal.valueOf(2.99));
+		Product product2 = new Product("Огурец", "Длинный, зелёный", Product.Category.VEGETABLE, BigDecimal.valueOf(3.50));
+		ProductService productService = new ProductService();
 
-		Product productFromRepository = productRepository.getById(0);
 
-		System.out.println(productFromRepository);
+//		productService.removeById(Long.valueOf(1));
+//		productService.printAll();
 
-		//Annotation
-		inspectService(LazyLoadService.class);
-		inspectService(SimpleLoadService.class);
-		inspectService(String.class);
+		productService.add(product);
+		productService.add(product1);
+		productService.add(product2);
+		productService.printAll();
+		productService.addDiscountToProductByName("Манго");
+		productService.getById(Long.valueOf(1));
+
+//		Annotation
+//		inspectService(LazyLoadService.class);
+//		inspectService(SimpleLoadService.class);
+//		inspectService(String.class);
 	}
-
-
-
-
-
-	//		SpringApplication.run(ProductApplication.class, args);
 }
